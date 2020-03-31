@@ -1,6 +1,7 @@
 board_template = ['','','','','','','','','']
 turn = [True, False]
 def displayBoard(board = []):
+    print '\n'
     for index in xrange(0,9):
         if board[index] == '':
             print '|-|',
@@ -78,8 +79,8 @@ def runGame(board_template, turn):
     displayBoard(board_template)
     if tie == True:
         print '\nIt\'s a tie!'
-        prompt = raw_input('Would you like to try again? Y/N')
-        if prompt == 'Y':
+        prompt = raw_input('Would you like to try again? Y/N\nAnswer: ').upper()
+        if prompt == 'Y' or prompt.startswith('Y'):
             iteration = 0
             for i in xrange(0, 9):
                 board_template[i] = ''
@@ -88,6 +89,8 @@ def runGame(board_template, turn):
             exit()
     print '\n'
     player_raw_input = int(input('%s\'s turn(1 - 9): ' % (getPlayerTurn(turn)))) - 1
+    if player_raw_input not in xrange(0, 9):
+        runGame(board_template, turn)
     if board_template[player_raw_input] != '':
         runGame(board_template, turn)
     board_template[player_raw_input] = getPlayerMark(turn)
@@ -98,8 +101,8 @@ def runGame(board_template, turn):
     else:
         displayBoard(board_template)
         print '\n%s won!' %(winner)
-        prompt = raw_input('Would you like to try again? Y/N\nAnswer: ')
-        if prompt == 'Y' or prompt == 'y':
+        prompt = raw_input('Would you like to try again? Y/N\nAnswer: ').upper()
+        if prompt == 'Y' or prompt.startswith('Y'):
             iteration = 0
             for i in xrange(0, 9):
                 board_template[i] = ''
